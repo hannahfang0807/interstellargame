@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-07-21 16:10:25
+-- 產生時間： 2021-07-22 14:31:56
 -- 伺服器版本： 10.4.20-MariaDB
 -- PHP 版本： 8.0.8
 
@@ -51,6 +51,27 @@ INSERT INTO `categories` (`categoryId`, `categoryName`, `categoryParentId`, `cre
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `delivery_types`
+--
+
+CREATE TABLE `delivery_types` (
+  `deliveryTypeId` int(11) NOT NULL COMMENT '流水號',
+  `deliveryTypeName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '配送方式',
+  `created_at` datetime NOT NULL DEFAULT current_timestamp() COMMENT '新增時間',
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新時間'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- 傾印資料表的資料 `delivery_types`
+--
+
+INSERT INTO `delivery_types` (`deliveryTypeId`, `deliveryTypeName`, `created_at`, `updated_at`) VALUES
+(1, '超商取貨', '2021-07-02 16:40:36', '2021-07-02 16:40:36'),
+(2, '宅配到府', '2021-07-02 16:40:36', '2021-07-02 16:40:36');
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `discount`
 --
 
@@ -70,13 +91,12 @@ CREATE TABLE `discount` (
 INSERT INTO `discount` (`discountId`, `userId`, `voucherId`, `discountUse`, `created_at`, `updated_at`) VALUES
 (2, 1, 3, 0, '2021-05-10 10:58:30', '2021-07-21 12:31:22'),
 (3, 2, 3, 0, '2021-05-10 11:20:58', '2021-07-21 12:31:15'),
-(4, 3, 3, 0, '2021-05-10 11:22:22', '2021-07-21 12:31:17'),
+(4, 3, 3, 0, '2021-07-22 11:22:22', '2021-07-22 12:31:17'),
 (5, 4, 3, 0, '2021-05-10 11:22:41', '2021-07-21 12:31:25'),
 (7, 5, 3, 0, '2021-05-10 11:24:34', '2021-07-21 12:31:33'),
 (8, 3, 4, 0, '2021-05-10 11:25:31', '2021-07-21 12:33:11'),
 (9, 3, 2, 1, '2021-05-10 11:26:28', '2021-07-21 12:32:30'),
-(15, 4, 2, 1, '2021-05-10 11:30:40', '2021-07-21 12:33:20'),
-(18, 4, 1, 0, '2021-05-11 16:20:28', '2021-07-21 12:33:00');
+(15, 4, 2, 1, '2021-05-10 11:30:40', '2021-07-21 12:33:20');
 
 -- --------------------------------------------------------
 
@@ -249,10 +269,39 @@ CREATE TABLE `members` (
 --
 
 INSERT INTO `members` (`userId`, `userEmail`, `userPwd`, `userName`, `userNickname`, `userGender`, `userPhone`, `userImg`, `userBirthday`, `userAddress`, `userBIN`, `created_at`, `updated_at`) VALUES
-(1, 'test000@gmail.com', '12345', '林志財', '財哥', '男', '0956701197', 'https://imgur.com/d8DfRrZ.jpg', '2001-04-11', '台北市信義區虎林街119號', 0, '2021-07-03 20:26:38', '2021-07-03 20:26:38'),
-(2, 'bobo567@gmail.com', '12345', '林靜利', '小靜', '女', '0912539668', 'https://imgur.com/1910uUS.jpg', '2000-12-12', '雲林縣斗六市北平路272號', 0, '2021-07-03 20:30:20', '2021-07-03 20:30:20'),
-(3, 'apple0918@gmail.com', '12345', '張佩璇', '佩璇', '女', '0928474076', 'https://imgur.com/FLvG67h.jpg', '1995-08-06', '新北市土城區中央路三段254號', 0, '2021-07-03 20:32:10', '2021-07-03 20:32:10'),
-(4, 'panda@gmail.com', '12345', '雷胖達', 'panda', '男', '0988638961', 'https://imgur.com/aoU3gi3.jpg', '1899-11-29', '宜蘭縣羅東鎮興東路228號', 0, '2021-07-21 12:23:24', '2021-07-21 12:23:24');
+(1, 'test000@gmail.com', '666666', '林志財', '財哥', '男', '0956701197', 'https://imgur.com/d8DfRrZ.jpg', '2001-04-11', '台北市信義區虎林街119號', 0, '2021-07-03 20:26:38', '2021-07-03 20:26:38'),
+(2, 'bobo567@gmail.com', '666666', '林靜利', '小靜', '女', '0912539668', 'https://imgur.com/1910uUS.jpg', '2000-12-12', '雲林縣斗六市北平路272號', 0, '2021-07-03 20:30:20', '2021-07-03 20:30:20'),
+(3, 'apple0918@gmail.com', '666666', '張佩璇', '佩璇', '女', '0928474076', 'https://imgur.com/FLvG67h.jpg', '1995-08-06', '新北市土城區中央路三段254號', 0, '2021-07-03 20:32:10', '2021-07-03 20:32:10'),
+(4, 'panda@gmail.com', '666666', '雷胖達', 'pandaaa', '男', '0988638961', 'https://imgur.com/aoU3gi3.jpg', '1899-11-28', '宜蘭縣羅東鎮興東路228號', 0, '2021-07-21 12:23:24', '2021-07-21 12:23:24');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `message`
+--
+
+CREATE TABLE `message` (
+  `messageId` int(20) NOT NULL COMMENT '留言編號',
+  `memberId` int(20) NOT NULL COMMENT '會員編號',
+  `storeId` int(20) NOT NULL COMMENT '分店編號',
+  `content` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '留言內容',
+  `replyId` int(10) NOT NULL COMMENT '回文編號',
+  `created_at` datetime NOT NULL DEFAULT current_timestamp() COMMENT '新增時間',
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新時間'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- 傾印資料表的資料 `message`
+--
+
+INSERT INTO `message` (`messageId`, `memberId`, `storeId`, `content`, `replyId`, `created_at`, `updated_at`) VALUES
+(1, 3, 1, '尋找明天下午想一起玩阿瓦隆的捧油們，人越多越好, 不過希望至少兩個女生OwO', 0, '2021-07-13 18:22:33', '2021-07-15 14:20:14'),
+(2, 2, 1, '我可以+1嗎^^', 1, '2021-07-13 18:24:45', '2021-07-15 14:20:27'),
+(3, 1, 1, '還敢群聚喔彎彎= =', 1, '2021-07-13 18:27:47', '2021-07-15 14:20:33'),
+(4, 4, 1, '我好想上實體課', 1, '2021-07-13 18:28:39', '2021-07-15 14:20:39'),
+(5, 5, 1, '打球有點膩想改打桌遊 有人要PLAY ONE嗎', 0, '2021-07-13 18:29:45', '2021-07-15 14:20:42'),
+(6, 5, 2, '詹姆士的分店留言測試', 0, '2021-07-16 00:26:59', '2021-07-16 00:31:44'),
+(7, 1, 2, '回應分店測試', 6, '2021-07-16 00:29:54', '2021-07-16 00:29:54');
 
 -- --------------------------------------------------------
 
@@ -443,6 +492,12 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`categoryId`);
 
 --
+-- 資料表索引 `delivery_types`
+--
+ALTER TABLE `delivery_types`
+  ADD PRIMARY KEY (`deliveryTypeId`);
+
+--
 -- 資料表索引 `discount`
 --
 ALTER TABLE `discount`
@@ -471,6 +526,12 @@ ALTER TABLE `item_lists`
 --
 ALTER TABLE `members`
   ADD PRIMARY KEY (`userId`);
+
+--
+-- 資料表索引 `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`messageId`);
 
 --
 -- 資料表索引 `orders`
@@ -511,6 +572,12 @@ ALTER TABLE `categories`
   MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=146;
 
 --
+-- 使用資料表自動遞增(AUTO_INCREMENT) `delivery_types`
+--
+ALTER TABLE `delivery_types`
+  MODIFY `deliveryTypeId` int(11) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=3;
+
+--
 -- 使用資料表自動遞增(AUTO_INCREMENT) `discount`
 --
 ALTER TABLE `discount`
@@ -538,7 +605,13 @@ ALTER TABLE `item_lists`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `members`
 --
 ALTER TABLE `members`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT COMMENT '會員編號', AUTO_INCREMENT=5;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT COMMENT '會員編號', AUTO_INCREMENT=22;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `message`
+--
+ALTER TABLE `message`
+  MODIFY `messageId` int(20) NOT NULL AUTO_INCREMENT COMMENT '留言編號', AUTO_INCREMENT=21;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
