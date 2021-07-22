@@ -149,12 +149,10 @@ router.post('/login', function (req, res, next) {
     userLogin(user.getUserByEmailAndPasswordSQL(), req, res, user)
   })
 
-
+// 上傳大頭貼
   router.post('/try-upload/:userId',upload.single('avatar'), (req, res)=>{
     console.log(req.file);
     res.json(req.file); // 用json傳給前端
-
-  
   }); 
   
   // 獲得會員資料
@@ -189,7 +187,7 @@ router.get('/getOrder/:userId', (req, res, next) => {
 
   userId = +req.params.userId
 
-  executeSQL(user.getUserOrderByIdSQL(userId), res, 'get', true)
+  executeSQL(User.getUserOrderByIdSQL(userId), res, 'get', true)
 })
 
 // get 獲取我的最愛，使用會員id
@@ -208,18 +206,7 @@ router.get('/getCoupon/:userId', (req, res, next) => {
   executeSQL(User.getUserCouponByIdSQL(userId), res, 'get', true)
 })
 
-// 上傳圖片
 
-// 取得資料
-router.get('/try-upload/:userId', (req, res)=>{
-  res.render('try-upload/:userId'); // 用json傳給前端
-
-  // 包含其他檔案
-  // res.json(file: req.file,
-  //   bocy:req.body,
-  //   ); 
-
-}); 
 
 // put 更新一筆資料
 router.put('/updateInfo/:userId', (req, res) => {
@@ -230,6 +217,7 @@ router.put('/updateInfo/:userId', (req, res) => {
     req.body.nickname,
     req.body.gender,
     req.body.phone,
+    req.body.img,
     req.body.birthday,
     req.body.address
     )
@@ -254,6 +242,7 @@ router.put('/pwd/:userId', (req, res) => {
     'nickname',
     'gender',
     'phone',
+    'img',
     'birthday',
     'address'
   )
@@ -264,7 +253,33 @@ router.put('/pwd/:userId', (req, res) => {
   executeSQL(user.updatePwdByIdSQL(userId), res, 'put', false, user)
 })
 
+// 更新會員大頭貼
+router.get('/try-upload/:userId', (req, res)=>{
+  res.render('try-upload/:userId'); // 用json傳給前端
 
+  // 包含其他檔案
+  // res.json(file: req.file,
+  //   bocy:req.body,
+  //   ); 
+
+  let user = new User(
+    'email',
+    'password',
+    'name',
+    'nickname',
+    'gender',
+    'phone',
+    req.body.img,
+    'birthday',
+    'address'
+  )
+  // console.log ('user:',user)
+  
+  userId = +req.params.userId
+
+  executeSQL(user.updateImgByIdSQL(userId), res, 'put', false, user)
+
+}); 
 
 
 

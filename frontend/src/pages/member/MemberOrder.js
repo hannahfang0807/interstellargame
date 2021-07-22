@@ -8,9 +8,8 @@ import fun03 from './images/fun03.png'
 import fun04 from './images/fun04.png'
 
 function MemberOrder(props) {
-  const userData = JSON.parse(localStorage.getItem('userData'))
+  const userId = JSON.parse(localStorage.getItem('userId'))
   const [orders, setOrders] = useState([])
-  const userId = userData.userId
 
   async function getOrdersFromServer() {
     // 連接的伺服器資料網址
@@ -38,61 +37,48 @@ function MemberOrder(props) {
     getOrdersFromServer()
   }, [])
 
-  // function convert_date(date_text) {
-  //   // date_text
-  //   const myDate = new Date(date_text)
-  //   const date_text_new = myDate.toISOString().substring(0, 10)
-  //   return `${date_text_new}`
-  // }
+  // 轉換日期格式
+  function convert_date(date_text) {
+    // date_text
+    const myDate = new Date(date_text)
+    const date_text_new = myDate.toISOString().substring(0, 10)
+    return `${date_text_new}`
+  }
 
   const OrderDisplay = (
     <>
-      {/* <div className="container">
-        <table className="table">
+      <div className="container m-container">
+        <table className="m-order-table">
           <thead>
             <tr>
               <th scope="col">訂單編號</th>
               <th scope="col">訂購日期</th>
-              <th scope="col">總金額</th>
-              <th scope="col">付款狀態</th>
+              {/* <th scope="col">總金額</th> */}
+              <th scope="col">配送方式</th>
               <th scope="col">配送狀態</th>
               <th scope="col">訂單狀態</th>
+              <th scope="col">查看訂單</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>{order.orderId}</td>
-              <td>{convert_date(order.created_at)}</td>
-              <td className="text-yellow">{order.orderPrice}</td>
-              <td>已完成</td>
-              <td>等待配送中</td>
-              <td>
-                <div className="order-btn">查看詳情</div>
-              </td>
-            </tr>
-            <tr>
-              <td>#00058</td>
-              <td>2021-06-07</td>
-              <td className="text-yellow">NT$500</td>
-              <td>已完成</td>
-              <td>待取貨</td>
-              <td>
-                <div className="order-btn">查看詳情</div>
-              </td>
-            </tr>
-            <tr>
-              <td>#00424</td>
-              <td>2021-06-07</td>
-              <td className="text-yellow">NT$1800</td>
-              <td>已完成</td>
-              <td>已送達</td>
-              <td>
-                <div className="order-btn">查看詳情</div>
-              </td>
-            </tr>
+          <tbody className="m-order-tbody">
+            {orders.length &&
+              orders.map((orders) => {
+                return (
+                  <tr>
+                    <td>#000{orders.orderId}</td>
+                    <td>{convert_date(orders.created_at)}</td>
+                    <td>{orders.deliveryTypeId}</td>
+                    <td>已完成</td>
+                    <td>已完成</td>
+                    <td className="m-order-td">
+                      <div className="m-order-btn">查看詳情</div>
+                    </td>
+                  </tr>
+                )
+              })}
           </tbody>
         </table>
-      </div>*/}
+      </div>
     </>
   )
 

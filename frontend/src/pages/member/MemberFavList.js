@@ -47,7 +47,7 @@ function MemberFavList(props) {
               <tr>
                 <th
                   scope="col"
-                  colSpan={3}
+                  colSpan={2}
                   className="m-favlist-th m-favlist-th"
                 >
                   商品
@@ -63,7 +63,7 @@ function MemberFavList(props) {
                 favlist.map((favlist) => {
                   return (
                     <tr>
-                      <td className="pl-3">
+                      <td className="m-w-200">
                         <div className="m-favlist-img-box">
                           <img
                             src={favlist.itemImg}
@@ -72,13 +72,12 @@ function MemberFavList(props) {
                           />
                         </div>
                       </td>
-                      <td>{favlist.itemName}</td>
-                      <td />
+                      <td className="text-left">{favlist.itemName}</td>
                       <td>{favlist.itemPrice}</td>
                       <td>
                         <i className="far fa-trash-alt m-favlist-i" />
                       </td>
-                      <td>
+                      <td className="m-favlist-td">
                         <div className="m-favlist-btn">查看商品</div>
                       </td>
                     </tr>
@@ -150,6 +149,7 @@ function MemberFavList(props) {
           </div>
         </div>
       </div>
+      {/* <h1 className="text-light text-center m-favlist-h1">我的最愛</h1> */}
       {favlistDisplay}
     </>
   )

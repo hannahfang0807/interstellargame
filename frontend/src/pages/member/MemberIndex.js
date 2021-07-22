@@ -70,6 +70,7 @@ function MemberIndex(props) {
 
   // 一開始就會開始載入資料
   useEffect(() => {
+    window.scrollTo(0, 0)
     getUserFromServer()
   }, [])
 
@@ -100,7 +101,7 @@ function MemberIndex(props) {
     // const data = await response.json()
 
     localStorage.clear()
-    window.location.replace(`/login/`)
+    window.location.replace(`/Homepage`)
   }
 
   // 轉換日期格式
@@ -209,7 +210,7 @@ function MemberIndex(props) {
         </div>
       </div>
       <div className="container m-container">
-        <div className="member-btn-group text-center row">
+        <div className="member-btn-group text-center row mb-5">
           <div
             className="col-6 col-lg-3"
             onClick={() => {
@@ -253,7 +254,7 @@ function MemberIndex(props) {
 
   return (
     <>
-      <h1 className="text-light text-center">會員資料</h1>
+      <h1 className="text-light text-center mt-5 m-index-h1">會員中心</h1>
       {display}
     </>
   )

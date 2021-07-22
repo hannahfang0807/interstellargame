@@ -51,11 +51,11 @@ function MemberEdit(props) {
     setNickname(data.userNickname)
     setName(data.userName)
     setGender(data.userGender)
-    setBirthday(data.userBirthday)
+    setBirthday(convert_date(data.userBirthday))
     setEmail(data.userEmail)
     setPhone(data.userPhone)
     setAddress(data.userAddress)
-    setImg(data.userImg)
+    setImg(data.userImg ? data.userImg : memberImg)
 
     // 如果從伺服器回傳的資料沒有id值
     if (!data.userId) {
@@ -130,34 +130,33 @@ function MemberEdit(props) {
     }, 1000)
   }
 
-  // async function uploadImgToSever() {
-  //   // 開啟載入指示
+  async function uploadImgToSever() {
+    // 開啟載入指示
 
-  //   const newData = {
-  //     img,
-  //   }
+    const newData = {
+      img,
+    }
 
-  //   // 連接的伺服器資料網址
-  //   // const url = 'http://localhost:3000/members/' + userData.userId
-  //   const url = `http://localhost:3000/members/try-upload/${userData.userId}`
+    // 連接的伺服器資料網址
+    const url = `http://localhost:3000/members/try-upload/` + userId
 
-  //   // 注意資料格式要設定，伺服器才知道是json格式
-  //   const request = new Request(url, {
-  //     method: 'PUT',
-  //     body: JSON.stringify(newData),
-  //     headers: new Headers({
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     }),
-  //   })
+    // 注意資料格式要設定，伺服器才知道是json格式
+    const request = new Request(url, {
+      method: 'PUT',
+      body: JSON.stringify(newData),
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }),
+    })
 
-  //   console.log(JSON.stringify(newData))
+    console.log(JSON.stringify(newData))
 
-  //   const response = await fetch(request)
-  //   const data = await response.json()
+    const response = await fetch(request)
+    const data = await response.json()
 
-  //   console.log('伺服器回傳的json資料', data)
-  // }
+    console.log('伺服器回傳的json資料', data)
+  }
 
   // 轉換日期格式
   function convert_date(date_text) {
@@ -170,14 +169,19 @@ function MemberEdit(props) {
   const display = (
     <>
       ;
-      <form
-        name="form1"
-        method="post"
-        novalidate
-        onsubmit="send(); retrun false;"
-      >
-        <input type="file" className="" id="avatar" name="avatar" />
+      <form name="form1" method="post">
+        <input
+          type="file"
+          className="form-control"
+          id="avatar"
+          name="avatar"
+          accept="image/jpeg"
+        />
       </form>
+      <button className="btn mb-3 m-edit-btn">上傳頭貼</button>
+      <button className="btn mb-3 m-edit-btn" onClick={uploadImgToSever}>
+        確認上傳
+      </button>
       <div className="container m-container">
         <div className="m-edit row text-center mb-5">
           <h1 className="text-light m-edit-h1">修改個人資訊</h1>
@@ -186,14 +190,21 @@ function MemberEdit(props) {
           </button> */}
           <div className="m-editTop text-center">
             <div className="m-memberA">
-              <img
-                src={img ? img : memberImg}
-                alt="memberImg"
-                className="m-edit-img"
-              />
+              <div className="member-edit-img-frame">
+                <img
+                  src={img}
+                  alt="memberImg"
+                  className="m-edit-img"
+                  onChange={(event) => {
+                    setImg(event.target.value)
+                  }}
+                />
+              </div>
             </div>
             <div className="m-memberB">
-              <button className="btn mb-3 m-edit-btn">上傳頭貼</button>
+              <button className="btn mb-3 m-edit-btn" onClick="avatar.click()">
+                上傳頭貼
+              </button>
               <button type="submit" className="btn my-3 m-edit-btn">
                 確認上傳
               </button>
@@ -257,21 +268,23 @@ function MemberEdit(props) {
               </div>
               {/* <small id="birthday" className="form-text hidden m-edit-small" /> */}
             </div>
-            {/* <div className="input-box py-4">
-              <label htmlFor="birthday">生日*</label>
+            <div className="input-box py-4">
+              <label htmlFor="birthday" className="m-edit-label">
+                生日*
+              </label>
               <div className="input-frame">
                 <input
                   type="date"
                   className="form-control transparent-input "
                   id="birthday"
-                  value={convert_date(birthday)}
+                  value={birthday}
                   onChange={(event) => {
                     setBirthday(event.target.value)
                   }}
                 />
               </div>
               <small id="gender" className="form-text hidden" />
-            </div> */}
+            </div>
             <div className="input-box py-4">
               <label htmlFor="email" className="m-edit-label">
                 E-mail*

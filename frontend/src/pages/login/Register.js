@@ -15,6 +15,12 @@ function Register(props) {
       console.log('密碼不相同')
       return
     }
+    // if (fieldErrors) {
+    //   console.log('fieldErrors', fieldErrors)
+    //   console.log('資料驗證失敗')
+    //   return
+    // }
+    console.log('fieldErrors', fieldErrors)
 
     const newData = { email, password }
 
@@ -44,15 +50,6 @@ function Register(props) {
         button: false,
         timer: 1000,
       })
-      // 如果登入成功
-      // 改動react App母層變數以紀錄現在的用戶登入狀態
-      // setCurrentUser(data.userId)
-      localStorage.setItem('userData', JSON.stringify(data))
-      // console.log(
-      //   'localStorge:',
-      //   localStorage.getItem('userId', JSON.stringify(data.userId))
-      // )
-      // setLoginmode(true)
     } else {
       swal({
         title: '註冊失敗',
@@ -73,25 +70,64 @@ function Register(props) {
     }, 1000)
   }
 
-  // const formRef = useRef(null)
+  // 資料驗證
+  const formRef = useRef(null)
+  const [fieldErrors, setFieldErrors] = useState({
+    email: '',
+    password: '',
+    passwordCheck: '',
+  })
 
-  // const [fields, setFields] = useState({
-  //   email: '',
-  //   password: '',
-  //   agree: false,
-  // })
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    addUserToSever()
+  }
 
-  // const handleFieldChange = (e) => {
-  //   const updatedFields = {
-  //     ...fields,
-  //     [e.target.name]:
-  //       e.target.type === 'checkbox'
-  //         ? e.target.checked
-  //         : e.target.value,
-  //   }
+  const handleChange = (e) => {
+    const updatedFieldErrors = {
+      ...fieldErrors,
+      [e.target.name]: '',
+    }
 
-  //   setFields(updatedFields)
-  // }
+    setFieldErrors(updatedFieldErrors)
+  }
+
+  const handleInvalid = (e) => {
+    e.preventDefault()
+
+    const form = formRef.current
+
+    let errorMsg = {}
+
+    for (let i = 0; i < form.elements.length; i++) {
+      const element = form.elements[i]
+
+      if (
+        element.tagName !== 'button' &&
+        element.willValidate &&
+        !element.validity.valid
+      ) {
+        if (element.validity.valueMissing) {
+          errorMsg = {
+            ...errorMsg,
+            [element.name]: element.validationMessage,
+          }
+        } else {
+          errorMsg = {
+            ...errorMsg,
+            [element.name]: element.title,
+          }
+        }
+      }
+    }
+
+    const updatedFieldErrors = {
+      ...fieldErrors,
+      ...errorMsg,
+    }
+
+    setFieldErrors(updatedFieldErrors)
+  }
 
   const display = (
     <>
@@ -115,66 +151,90 @@ function Register(props) {
               <h2 className="text-light text-center regis-right-h2">
                 會員註冊
               </h2>
-              <div className="input-box pb-3">
-                <label htmlFor="email" className="regis-label">
-                  E-mail*
-                </label>
-                <div className="input-frame">
-                  <input
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={(event) => {
-                      setEmail(event.target.value)
-                    }}
-                    required
-                    className="form-control transparent-input "
-                    id="email"
-                    placeholder="請輸入你的E-mail作為登入帳號"
-                  />
+              <form
+                ref={formRef}
+                onChange={handleChange}
+                onInvalid={handleInvalid}
+                onSubmit={handleSubmit}
+              >
+                <div className="input-box pb-3">
+                  <label htmlFor="email" className="regis-label">
+                    E-mail*
+                  </label>
+                  <div className="input-frame">
+                    <input
+                      type="email"
+                      name="email"
+                      value={email}
+                      onChange={(event) => {
+                        setEmail(event.target.value)
+                      }}
+                      required
+                      className="form-control transparent-input "
+                      id="email"
+                      placeholder="請輸入你的E-mail作為登入帳號"
+                      title="E-mail信箱格式錯誤"
+                    />
+                  </div>
+                  {fieldErrors.email && (
+                    <small className="text-danger form-text">
+                      {fieldErrors.email}
+                    </small>
+                  )}
                 </div>
-              </div>
-              <div className="input-box pb-3">
-                <label htmlFor="password" className="regis-label">
-                  密碼*
-                </label>
-                <div className="input-frame">
-                  <input
-                    type="text"
-                    name="password"
-                    value={password}
-                    onChange={(event) => {
-                      setPassword(event.target.value)
-                    }}
-                    required
-                    className="form-control transparent-input "
-                    id="password"
-                    placeholder="密碼必須為6個字以上包含大寫的英數字母"
-                    minLength="6"
-                  />
+                <div className="input-box pb-3">
+                  <label htmlFor="password" className="regis-label">
+                    密碼*
+                  </label>
+                  <div className="input-frame">
+                    <input
+                      type="text"
+                      name="password"
+                      value={password}
+                      onChange={(event) => {
+                        setPassword(event.target.value)
+                      }}
+                      required
+                      className="form-control transparent-input "
+                      id="password"
+                      placeholder="密碼必須為6個字以上包含大寫的英數字母"
+                      minLength="6"
+                      title="密碼格式錯誤"
+                    />
+                  </div>
+                  {fieldErrors.password && (
+                    <small className="text-danger form-text">
+                      {fieldErrors.password}
+                    </small>
+                  )}
                 </div>
-              </div>
-              <div className="input-box pb-3">
-                <label htmlFor="checkPassword" className="regis-label">
-                  確認密碼*
-                </label>
-                <div className="input-frame">
-                  <input
-                    type="text"
-                    name="checkPassword"
-                    value={checkPassword}
-                    onChange={(event) => {
-                      setCheckPassword(event.target.value)
-                    }}
-                    required
-                    className="form-control transparent-input "
-                    id="checkPassword"
-                    placeholder="請再輸入一次密碼"
-                    minLength="6"
-                  />
+                <div className="input-box pb-3">
+                  <label htmlFor="checkPassword" className="regis-label">
+                    確認密碼*
+                  </label>
+                  <div className="input-frame">
+                    <input
+                      type="text"
+                      name="checkPassword"
+                      value={checkPassword}
+                      onChange={(event) => {
+                        setCheckPassword(event.target.value)
+                      }}
+                      required
+                      className="form-control transparent-input "
+                      id="checkPassword"
+                      placeholder="請再輸入一次密碼"
+                      minLength="6"
+                      title="兩次輸入密碼不相同"
+                    />
+                  </div>
+                  {fieldErrors.passwordCheck && (
+                    <small className="text-danger form-text">
+                      {fieldErrors.passwordCheck}
+                    </small>
+                  )}
                 </div>
-              </div>
-              {/* <div className="form-check">
+                {/* <div className="form-check">
                   <input
                     type="checkbox"
                     name="agree"
@@ -190,21 +250,16 @@ function Register(props) {
                     我同意網站的使用者規章
                   </label>
                 </div> */}
-              <button
-                type="submit"
-                className="btn btn-block regis-right-btn"
-                onClick={() => {
-                  addUserToSever()
-                }}
-              >
-                註冊
-              </button>
-              <p className="text-light mt-  3 text-center">
-                已經有會員了？
-                <Link to="/login" className="regis-right-link">
-                  會員登入
-                </Link>
-              </p>
+                <button type="submit" className="btn btn-block regis-right-btn">
+                  註冊
+                </button>
+                <p className="text-light mt-  3 text-center">
+                  已經有會員了？
+                  <Link to="/login" className="regis-right-link">
+                    會員登入
+                  </Link>
+                </p>
+              </form>
             </div>
           </div>
         </div>

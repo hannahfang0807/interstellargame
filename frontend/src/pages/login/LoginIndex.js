@@ -9,11 +9,17 @@ import googleLogin from './images/google-login.png'
 function LoginIndex(props) {
   // const { current_user, setCurrentUser } = props
   // const [loginmode, setLoginmode] = useState(false)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   async function loginToServer() {
     const newData = { email, password }
+
+    // if (fieldErrors) {
+    //   console.log('資料驗證失敗')
+    //   return
+    // }
 
     const url = 'http://localhost:3000/members/login'
 
@@ -78,28 +84,6 @@ function LoginIndex(props) {
     }, 1000)
   }
 
-  // 確認登入狀況
-  // async function getjwtvertifyFromServer() {
-  //   const token = localStorage.getItem('token')
-
-  //   const response = await fetch('http://localhost:300/members/checklogin', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       token,
-  //     }),
-  //   })
-
-  //   const data = await response.json()
-  //   console.log('check login response = ', data)
-  // }
-
-  // const test = () => {
-  //   getjwtvertifyFromServer()
-  // }
-
   const display = (
     <>
       <div className="login">
@@ -139,6 +123,7 @@ function LoginIndex(props) {
                     required
                     id="email"
                     placeholder="E-mail"
+                    title="E-mail信箱格式錯誤"
                   />
                 </div>
               </div>
@@ -160,6 +145,7 @@ function LoginIndex(props) {
                     id="password"
                     placeholder="Password"
                     minLength="6"
+                    title="密碼格式錯誤"
                   />
                 </div>
               </div>

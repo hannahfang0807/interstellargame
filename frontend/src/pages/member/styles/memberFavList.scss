@@ -81,6 +81,13 @@
     line-height: 50px;
     cursor: pointer;
   }
+  .m-favlist-td {
+    &:hover {
+      .m-favlist-btn {
+        background-color: #b388fe;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -105,6 +112,7 @@
 
 .m-favlist-img-box {
   width: 80px;
+  margin: 0 auto;
 
   .m-favlist-img {
     width: 100%;
