@@ -2,6 +2,7 @@
   font-size: 1rem;
   font-family: 'Noto Sans TC', sans-serif;
   letter-spacing: 0.5px;
+  width: 1140px;
 }
 
 @media screen and (max-width: 768px) {
@@ -75,11 +76,13 @@
     background-color: #ce93d7;
     border-radius: 5px;
     color: #02021e;
-    font-size: 1rem;
+    font-size: 0.9rem;
     width: 70%;
     margin: auto;
     line-height: 50px;
     cursor: pointer;
+    padding: 10px 20px;
+    text-decoration: none;
   }
   .m-favlist-td {
     &:hover {

@@ -1,91 +1,79 @@
 import React, { useState, useEffect } from 'react'
-import { withRouter, Link, NavLink, Redirect } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
 // style
 import './styles/memberPwdEdit.scss'
 
-// pop up套件
+//pop up套件
 import swal from 'sweetalert'
 
 function MemberPwdEdit(props) {
-  const userData = JSON.parse(localStorage.getItem('userData'))
-  const userId = userData.userId
-  // console.log('userId:', userId)
+  const userId = JSON.parse(localStorage.getItem('userId'))
 
   const [password, setPassword] = useState('')
   const [newPwd, setNewPwd] = useState('')
   const [newPwdCheck, setNewPwdCheck] = useState('')
 
-  // 檢查兩個密碼是否相同
-  async function checkPassword(newPwd, newPwdCheck) {
-    if (newPwd === newPwdCheck && newPwdCheck != '') {
-      return true
-    } else {
-      return false
-    }
-  }
-
   // 更新密碼
   async function updatePwdToSever() {
-    if (await checkPassword(newPwd, newPwdCheck)) {
-      const newData = {
-        password: newPwd,
-      }
+    const newData = {
+      password,
+    }
 
-      const url = 'http://localhost:3000/members/pwd/' + userId
+    const url = 'http://localhost:3000/members/updatePwd/' + userId
 
-      // 以下實際發出request
-      // 注意資料格式要設定，伺服器才知道是json格式
-      const request = new Request(url, {
-        method: 'PUT',
-        body: JSON.stringify(newData),
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }),
-      })
-      console.log(JSON.stringify(newData))
-      // console.log(`request header = ${request.headers}`)
-      // console.log(`request body = ${request.body}`)
+    const request = new Request(url, {
+      method: 'PUT',
+      body: JSON.stringify(newData),
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }),
+    })
+    console.log(JSON.stringify(newData))
 
-      // if (newData.password != null) {
-      const response = await fetch(request)
-      const data = await response.json()
-      if (data.passowrd) {
-        userData.userPassword = data.passowrd
-      }
-      // } else {
-      //   alert(password)
-      // }
-      // end if
-      localStorage.setItem('userData', JSON.stringify(data))
-      console.log('伺服器回傳的json資料', data)
-      // 要等驗証過，再設定資料(簡單的直接設定)
+    const response = await fetch(request)
+    const data = await response.json()
 
-      //直接在一段x秒關掉指示器
-      setTimeout(() => {
-        swal({
-          text: '密碼修改成功！！！',
-          icon: 'success',
-          button: false,
-          timer: 3000,
-        })
-      }, 1000)
-    } else {
-      // 抓出了空字串或者兩行不同 警訊以下內容
+    console.log('伺服器回傳的json資料', data)
+
+    // 彈出提示視窗
+    if (data) {
       swal({
-        text: '密碼有誤, 請重新檢查',
+        text: '密碼修改成功',
+        icon: 'success',
+        button: false,
+        timer: 3000,
+      })
+    } else {
+      swal({
+        text: '密碼修改失敗，請重新設定',
         icon: 'error',
         button: false,
         timer: 3000,
       })
     }
-  }
+    setTimeout(() => {
+      if (data.userId != undefined) {
+        window.location.replace(`/homepage`)
+        return data.userId
+      } else {
+        return 0
+      }
+    }, 1000)
 
-  const display = (
-    <>
-      ;
-      <div>
+    // // 檢查兩個密碼是否相同
+    // async function checkPassword(newPwd, newPwdCheck) {
+    //   if (newPwd === newPwdCheck && newPwdCheck != '') {
+    //     return true
+    //   } else {
+    //     return false
+    //     console.log('新密碼不同')
+    //   }
+    // }
+
+    const display = (
+      <>
         <div className="container m-container">
           <div className="m-pwd-edit row text-center ">
             <h1 className="text-light m-pwd-edit-h1">修改密碼</h1>
@@ -102,7 +90,7 @@ function MemberPwdEdit(props) {
                     required
                     className="form-control m-edit-input "
                     id="userPwd"
-                    placeholder="請輸入目前的密碼"
+                    placeholder="請輸入目前使用的密碼"
                     minLength="6"
                     onChange={(event) => {
                       setPassword(event.target.value)
@@ -158,11 +146,15 @@ function MemberPwdEdit(props) {
             </div>
           </div>
         </div>
-      </div>
-    </>
-  )
-
-  return <>{display}</>
+      </>
+    )
+    return (
+      <>
+        <h1 className="text-light text-center mt-5 m-index-h1">修改密碼</h1>
+        {display}
+      </>
+    )
+  }
 }
 
 export default withRouter(MemberPwdEdit)

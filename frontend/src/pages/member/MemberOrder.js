@@ -71,7 +71,7 @@ function MemberOrder(props) {
                     <td>已完成</td>
                     <td>已完成</td>
                     <td className="m-order-td">
-                      <div className="m-order-btn">查看詳情</div>
+                      <Link className="m-order-btn">查看詳情</Link>
                     </td>
                   </tr>
                 )

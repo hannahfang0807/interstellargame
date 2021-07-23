@@ -15,11 +15,7 @@ function Register(props) {
       console.log('密碼不相同')
       return
     }
-    // if (fieldErrors) {
-    //   console.log('fieldErrors', fieldErrors)
-    //   console.log('資料驗證失敗')
-    //   return
-    // }
+
     console.log('fieldErrors', fieldErrors)
 
     const newData = { email, password }
@@ -48,7 +44,7 @@ function Register(props) {
         text: '歡迎來到宇宙船艦',
         icon: 'success',
         button: false,
-        timer: 1000,
+        timer: 3000,
       })
     } else {
       swal({
@@ -157,7 +153,7 @@ function Register(props) {
                 onInvalid={handleInvalid}
                 onSubmit={handleSubmit}
               >
-                <div className="input-box pb-3">
+                <div className="input-box pb-1">
                   <label htmlFor="email" className="regis-label">
                     E-mail*
                   </label>
@@ -176,13 +172,15 @@ function Register(props) {
                       title="E-mail信箱格式錯誤"
                     />
                   </div>
-                  {fieldErrors.email && (
+                  {fieldErrors.email ? (
                     <small className="text-danger form-text">
                       {fieldErrors.email}
                     </small>
+                  ) : (
+                    <small className="text-danger form-text">&nbsp;</small>
                   )}
                 </div>
-                <div className="input-box pb-3">
+                <div className="input-box pb-1">
                   <label htmlFor="password" className="regis-label">
                     密碼*
                   </label>
@@ -202,10 +200,12 @@ function Register(props) {
                       title="密碼格式錯誤"
                     />
                   </div>
-                  {fieldErrors.password && (
+                  {fieldErrors.password ? (
                     <small className="text-danger form-text">
                       {fieldErrors.password}
                     </small>
+                  ) : (
+                    <small className="text-danger form-text">&nbsp;</small>
                   )}
                 </div>
                 <div className="input-box pb-3">

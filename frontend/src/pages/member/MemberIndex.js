@@ -139,7 +139,7 @@ function MemberIndex(props) {
                   <button
                     className="my-1 member-left-btn"
                     onClick={() => {
-                      props.history.push('/member/memberPwdEdit/')
+                      props.history.push('/member/memberPwdEdit/' + userId)
                     }}
                   >
                     修改密碼
@@ -254,7 +254,7 @@ function MemberIndex(props) {
 
   return (
     <>
-      <h1 className="text-light text-center mt-5 m-index-h1">會員中心</h1>
+      <h1 className="text-light text-center mt-5 m-index-h1">修改個人資料</h1>
       {display}
     </>
   )

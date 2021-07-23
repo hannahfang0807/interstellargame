@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter, Link } from 'react-router-dom'
+
+// style
 import './styles/memberEdit.scss'
 
 //pop up套件
@@ -122,7 +124,7 @@ function MemberEdit(props) {
     }
     setTimeout(() => {
       if (data.userId != undefined) {
-        window.location.replace(`/member/`)
+        window.location.replace(`/member`)
         return data.userId
       } else {
         return 0
@@ -130,33 +132,33 @@ function MemberEdit(props) {
     }, 1000)
   }
 
-  async function uploadImgToSever() {
-    // 開啟載入指示
+  // async function uploadImgToSever() {
+  //   // 開啟載入指示
 
-    const newData = {
-      img,
-    }
+  //   const newData = {
+  //     img,
+  //   }
 
-    // 連接的伺服器資料網址
-    const url = `http://localhost:3000/members/try-upload/` + userId
+  //   // 連接的伺服器資料網址
+  //   const url = `http://localhost:3000/members/try-upload/` + userId
 
-    // 注意資料格式要設定，伺服器才知道是json格式
-    const request = new Request(url, {
-      method: 'PUT',
-      body: JSON.stringify(newData),
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+  //   // 注意資料格式要設定，伺服器才知道是json格式
+  //   const request = new Request(url, {
+  //     method: 'PUT',
+  //     body: JSON.stringify(newData),
+  //     headers: new Headers({
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     }),
+  //   })
 
-    console.log(JSON.stringify(newData))
+  //   console.log(JSON.stringify(newData))
 
-    const response = await fetch(request)
-    const data = await response.json()
+  //   const response = await fetch(request)
+  //   const data = await response.json()
 
-    console.log('伺服器回傳的json資料', data)
-  }
+  //   console.log('伺服器回傳的json資料', data)
+  // }
 
   // 轉換日期格式
   function convert_date(date_text) {
@@ -169,7 +171,7 @@ function MemberEdit(props) {
   const display = (
     <>
       ;
-      <form name="form1" method="post">
+      {/* <form name="form1" method="post">
         <input
           type="file"
           className="form-control"
@@ -181,7 +183,7 @@ function MemberEdit(props) {
       <button className="btn mb-3 m-edit-btn">上傳頭貼</button>
       <button className="btn mb-3 m-edit-btn" onClick={uploadImgToSever}>
         確認上傳
-      </button>
+      </button> */}
       <div className="container m-container">
         <div className="m-edit row text-center mb-5">
           <h1 className="text-light m-edit-h1">修改個人資訊</h1>
@@ -202,10 +204,17 @@ function MemberEdit(props) {
               </div>
             </div>
             <div className="m-memberB">
-              <button className="btn mb-3 m-edit-btn" onClick="avatar.click()">
+              <button
+                type="file"
+                className="btn mb-3 m-edit-btn"
+                onClick="avatar.click()"
+              >
                 上傳頭貼
               </button>
-              <button type="submit" className="btn my-3 m-edit-btn">
+              <button
+                type="submit"
+                className="btn my-3 m-edit-btn m-edit-btn-gray"
+              >
                 確認上傳
               </button>
             </div>

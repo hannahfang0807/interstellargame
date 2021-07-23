@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react'
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import './styles/memberFavList.scss'
 import fun00 from './images/fun00.png'
 import fun01 from './images/fun01.png'
@@ -78,7 +78,12 @@ function MemberFavList(props) {
                         <i className="far fa-trash-alt m-favlist-i" />
                       </td>
                       <td className="m-favlist-td">
-                        <div className="m-favlist-btn">查看商品</div>
+                        <Link
+                          className="m-favlist-btn"
+                          to={'/item-detail' + favlist.itemId}
+                        >
+                          查看商品
+                        </Link>
                       </td>
                     </tr>
                   )
