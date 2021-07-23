@@ -92,7 +92,7 @@ export default class Shoppingcart4 extends React.Component {
             </div>
             <div className="cart4title1 ">
               <div className="cart4title2 cartp ">
-                <div className="m-4 cartp">訂單編號：{data.orderId}</div>
+                <div className="m-4 cartp">訂單編號：0082</div>
                 <div className=" frame  pl-4 pt-4  mb-3">
                   <p> 收件人：{data.orderName}</p>
                   <br></br>
