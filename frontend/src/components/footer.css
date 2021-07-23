@@ -15,6 +15,7 @@ footer {
 .foobox1 {
   width: 200px;
   margin-top: 100px;
+  text-align: center;
 }
 .foo-title {
   font-size: 24px;
@@ -29,6 +30,7 @@ hr {
 .foo-link {
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 .foo-link a,
 .address,
@@ -41,7 +43,7 @@ hr {
   letter-spacing: 2px;
 }
 .foo-link a:hover {
-  color: #CE93D7;
+  color: #ce93d7;
 }
 .foobox2 {
   margin-top: 80px;
