@@ -6,10 +6,10 @@ import Button from './Button'
 
 import logo from '../pages/image/svg/logo.svg'
 import icon_shop from '../pages/image/svg/icon-shop.svg'
-import memberPreset from '../pages/image/svg/memberPreset.svg'
+import memberPreset from '../pages/member/images/member-img.png'
+import burgerList from '../pages/image/svg/nav-burgerlist.svg'
 
 // import memberPreset from '../pages/image/jpg/test01.jpg'
-
 
 const Navbar = () => {
   const userId = JSON.parse(localStorage.getItem('userId'))
@@ -25,7 +25,7 @@ const Navbar = () => {
 
     const newCart = localStorage.getItem('cart') || '[]'
 
-    console.log(JSON.parse(newCart))
+    // console.log(JSON.parse(newCart))
 
     setMycart(JSON.parse(newCart))
   }
@@ -62,21 +62,21 @@ const Navbar = () => {
         newMycartDisplay = [...newMycartDisplay, newItem]
       }
     }
-console.log("商品有多少", mycart.length)
+    // console.log('商品有多少', mycart.length)
 
-    console.log(newMycartDisplay)
+    // console.log(newMycartDisplay)
     setMycartDisplay(newMycartDisplay)
   }, [mycart])
 
   // 更新購物車中的商品數量
   const updateCartToLocalStorage = (item, isAdded = true) => {
-    console.log(item, isAdded)
+    // console.log(item, isAdded)
     const currentCart = JSON.parse(localStorage.getItem('cart')) || []
 
     // find if the product in the localstorage with its id
     const index = currentCart.findIndex((v) => v.itemId === item.itemId)
 
-    console.log('index', index)
+    // console.log('index', index)
     // found: index! == -1
     if (index > -1) {
       isAdded ? currentCart[index].amount++ : currentCart[index].amount--
@@ -84,11 +84,10 @@ console.log("商品有多少", mycart.length)
 
     localStorage.setItem('cart', JSON.stringify(currentCart))
 
-    
     // 設定資料
     setMycart(currentCart)
   }
- 
+
   useEffect(() => {
     $('.nav-ul')
       .click(function () {
@@ -119,6 +118,39 @@ console.log("商品有多少", mycart.length)
             </a>
           </div>
           <div className="navbar-link" id="navbarText">
+            <button
+              type="button"
+              class="dropdown-toggle dropdown-toggle-split btn-linkrDropdown"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <a href="/" className="nav-burgerList">
+                <img src={burgerList} alt="" />
+              </a>
+
+              <span class="sr-only"></span>
+            </button>
+            <div className="dropdown-menu nav-dropdownMenu">
+              <a className="dropdown-item navMenu-link" href="/homepage">
+                首頁
+              </a>
+              <a className="dropdown-item navMenu-link" href="/booking/steps">
+                預約艙房
+              </a>
+              <a className="dropdown-item navMenu-link" href="/item-list">
+                宇宙市集
+              </a>
+              <a className="dropdown-item navMenu-link" href="/Game">
+                星際任務
+              </a>
+              <a className="dropdown-item navMenu-link" href="/messageboard">
+                太空交誼廳
+              </a>
+              <a className="dropdown-item navMenu-link" href="/about">
+                聯絡總署
+              </a>
+            </div>
             <ul className="navbar-ul mx-auto">
               <li className="nav-item">
                 <a href="/booking/steps">預約艙房</a>
@@ -163,7 +195,7 @@ console.log("商品有多少", mycart.length)
                   >
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
-                  <div className="dropdown-menu member-dropdoenMenu">
+                  <div className="dropdown-menu member-dropdownMenu">
                     <a className="dropdown-item memberMenu-link" href="/member">
                       會員中心
                     </a>

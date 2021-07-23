@@ -18,7 +18,12 @@
   height: 100%;
   padding-top: 25px;
 }
+.nav-burgerList,
+.btn-linkrDropdown {
+  display: none;
+}
 .navbar-ul {
+  display: block;
   width: 100%;
   display: flex;
   align-items: center;
@@ -88,7 +93,7 @@
 .btn-memberIcon {
   height: 50px;
   width: 50px;
-  border: 5px solid white;
+  border: 3px solid white;
   border-radius: 50px;
   object-fit: cover;
 }
@@ -101,7 +106,7 @@
 .btn-memberDropdown::after {
   width: 12px;
 }
-.member-dropdoenMenu {
+.member-dropdownMenu {
   position: absolute;
   top: 55px;
   left: -70px;
@@ -112,4 +117,76 @@
   color: white;
   text-align: center;
   padding: 15px;
+}
+/* --- mobile --- */
+@media screen and (max-width: 768px) {
+  .navbar-c {
+    display: flex;
+    justify-content: end;
+  }
+  .nav-burgerList,
+  .btn-linkrDropdown {
+    display: block;
+  }
+
+  .navbar-link {
+    display: block;
+    position: relative;
+  }
+  .logo,
+  .navbar-ul {
+    display: none;
+  }
+  .btn-linkrDropdown {
+    background-color: transparent;
+    border: 0;
+  }
+  .nav-burgerList img {
+    margin-top: 20px;
+    width: 30px;
+    align-items: center;
+  }
+  .nav-dropdownMenu {
+    position: absolute;
+    top: 55px;
+    left: -20px;
+    background-color: #02021e;
+    border-radius: 0 0 10px 10px;
+  }
+  .navMenu-link {
+    color: white;
+    text-align: center;
+    padding: 15px;
+  }
+  .right-items {
+    margin-left: 85px;
+    justify-content: flex-end;
+  }
+  .shopping-cart {
+    width: 0%;
+  }
+  .shopping-cart img {
+    padding-left: 0;
+  }
+  .button-control {
+    position: relative;
+    margin-left: 50px;
+  }
+  .login-registered {
+    margin-left: -15px;
+  }
+  .button-control a {
+    margin-left: 20px;
+  }
+  .member-dropdownMenu {
+    text-align: center;
+    top: 55px;
+    left: -32px;
+  }
+  .memberMenu-link {
+    width: 120px;
+    color: white;
+    text-align: center;
+    padding: 15px;
+  }
 }
