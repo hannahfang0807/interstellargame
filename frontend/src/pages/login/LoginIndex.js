@@ -47,7 +47,7 @@ function LoginIndex(props) {
         text: '歡迎回到宇宙船艦',
         icon: 'success',
         button: false,
-        timer: 1000,
+        timer: 3000,
       })
       // test()
       // 如果登入成功
@@ -74,7 +74,7 @@ function LoginIndex(props) {
     setTimeout(() => {
       // data.id = undefined
       if (data.userId != undefined) {
-        window.location.replace(`/member/`)
+        window.location.replace(`/homepage`)
         return data.userId
       } else {
         setEmail('')
